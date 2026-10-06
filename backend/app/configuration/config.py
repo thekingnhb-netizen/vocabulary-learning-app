@@ -1,19 +1,11 @@
 import os
 from dotenv import load_dotenv
 
-base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-load_dotenv(os.path.join(base_dir, ".env"))
+load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 
 class Config:
-    SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
-    SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL",
-        "sqlite:///learn_vocabulary.db",
-    )
+    SECRET_KEY = os.getenv('SECRET_KEY', 'dev-secret-key')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'postgresql://postgres:postgres@localhost:5432/learn_vocabulary')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    if os.getenv("TESTING") == "1":
-        SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL", "sqlite:///:memory:")
-
-    CORS_ORIGINS = ["http://localhost:5173"]
+    CORS_ORIGINS = [os.getenv('FRONTEND_URL', 'http://localhost:5173')]
